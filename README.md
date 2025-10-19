@@ -1,4 +1,8 @@
-# Introduzione
+<div style="width: 100%; display: inline-flex; justify-content:center; align-items:center;">
+    <img src = "assets/logo-c.png" alt = "Logo Linguaggio C" style = "max-width: 200px; padding: 1em 2em;" />
+</div>
+
+# Introduzione     
 
 Il linguaggio C è uno dei più conosciuti nel panorama dell'informatica, la sua fama è dovuta principalmente a due
 fattori: il suo impiego nello sviluppo dei sistemi operativi UNIX, e la sua semplicità. La sua popolarità e la sua
