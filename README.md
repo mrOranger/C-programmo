@@ -1,4 +1,4 @@
-<div style="min-width: 100px; max-width: 250px; display: inline-flex; justify-content:center; align-items:center;">
+<div style="min-width: 100px; max-width: 200px; display: inline-flex; justify-content:center; align-items:center;">
     <img src = "assets/logo-c.png" alt = "Logo Linguaggio C" style = "max-width: 200px; padding: 1em 2em;" />
 </div>
 
