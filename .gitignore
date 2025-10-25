@@ -1,0 +1,83 @@
+# File oggetto compilati
+*.o
+*.obj
+*.ko
+*.elf
+
+# File precompilati
+*.gch
+*.pch
+
+# Librerie
+*.lib
+*.a
+*.la
+*.lo
+*.so
+*.so.*
+*.dylib
+*.dll
+
+# Eseguibili
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+a.out
+
+# File di debug
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Core dump
+core
+core.*
+
+# Dipendenze generate automaticamente
+*.d
+
+# Editor e IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+build/
+_build/
+
+# Makefile generati
+Makefile.in
+
+# Autotools
+.deps/
+.libs/
+*.la
+*.lo
+autom4te.cache/
+config.h
+config.h.in
+config.log
+config.status
+configure
+stamp-h1
+
+# Valgrind
+*.log
+vgcore.*
+
+# Backup
+*.bak
+*.orig
