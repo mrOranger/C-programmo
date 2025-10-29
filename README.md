@@ -90,7 +90,3 @@ compongono la creazione di un programma eseguibile, partendo dal codice sorgente
 Se state compilando il programma da un sistema operativo basato su UNIX, attraverso il comando `gcc hello_world.c`,
 (supponendo che il file contenente il codice sorgente di sopra si chiami `hello_world`), otterrete come risultato il
 file `a.out`, ossia l'effettivo eseguibile ottenuto dal risultato del processo precedente.
-
-$$    
- f(x) = x
-$$
