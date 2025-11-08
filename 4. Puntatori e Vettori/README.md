@@ -5,11 +5,11 @@ livello, ci permette di accedere a funzionalità e concetti vicini al dispositiv
 eseguito. Tra le varie funzionalità a "basso livello" è inclusa la diretta manipolazione della memoria.
 
 Prima di iniziare a descrivere come sia possibile manipolare direttamente la memoria del nostro programma, è necessario
-fare un excursus sulla gestione globale delle memoria nei più moderni calcolatori elettronici. Per pima cosa, è
+fare un excursus sulla gestione globale delle memoria nei più moderni calcolatori elettronici. Per prima cosa, è
 necessario ricordare che la memoria è organizzata in __celle__, ciascuna delle quali possiede un __indirizzo__ che ne
-indentifica la precisa posizione e ne permette l'accesso immediato dal programma che ne fa uso. Gli indirizzi sono
+identifica la precisa posizione e ne permette l'accesso immediato dal programma che ne fa uso. Gli indirizzi sono
 tipicamente stringhe alfanumeriche di lunghezza pari alla dimensione delle parole nell'architettura corrente. Quindi,
-disposivi con architettura `x86` avranno indirizzi di memoria lunghi `32bit = 4byte`, mentre, dispostivi con
+dispositivi con architettura `x86` avranno indirizzi di memoria lunghi `32bit = 4byte`, mentre, dispositivi con
 architettura a `x64` avranno indirizzi di memoria di lunghezza pari a `64bit = 8byte`.
 
 Infine, dobbiamo precisare che in un linguaggio come il C, non si andrà direttamente a manipolare la memoria RAM del
@@ -60,7 +60,7 @@ centrale disponibile per un sistema con architettura a 64 bit.
 </div>
 
 Il rettangolo principale che rappresenta la memoria centrale è diviso in piccole forme rappresentanti le diverse celle
-di memoria. A ciacuna cella è assegnato un indirizzo di lunghezza pari a 64 bit, rappresentato in formato esadecimale,
+di memoria. A ciascuna cella è assegnato un indirizzo di lunghezza pari a 64 bit, rappresentato in formato esadecimale,
 all'interno della variabile chiamata `number_ptr` è inserito l'indirizzo di memoria della cella rappresentata dalla
 variabile `number`. Infine, la freccia rossa indica l'operatore di dereferenziazione dal puntatore alla variabile
 stessa.
@@ -101,7 +101,7 @@ Tuttavia, basandoci sulla figura precedente, e supponendo che la cella di memori
 cella di memoria successiva `0x000000002`, è sempre parte della definizione del numero intero dichiarato
 precedentemente, quale parte di questo intero memorizzi non lo sapremo mai. Tuttavia, accedere a questa cella di
 memoria, e poter eseguire delle operazioni, potrebbe causare degli effetti indesiderati su tutto il programma. Dunque,
-per impedire questo accesso, il compilatore in C, restituisce la cella di memoria successiva, appartenente ad un'altro
+per impedire questo accesso, il compilatore in C, restituisce la cella di memoria successiva, appartenente ad un altro
 informazione del nostro programma, ossia: `0x000000005`.
 
 Possiamo quindi supporre che le operazioni aritmetiche su un puntatore sono __coerenti__, ossia: rispettano la semantica
@@ -280,3 +280,25 @@ una zona di memoria in cui consecutivamente sono memorizzati dei caratteri, oppu
 lo sapremo mai. Inoltre, essendo un semplice puntatore, non potremmo ottenere la dimensione dell'eventuale vettore a cui
 punta, in quanto, `sizeof(my_str_2)`, restituirà sempre la dimensione assegnata ad un puntatore nell'architettura
 corrente.
+
+## Puntatori a Puntatori
+
+Affermando che una stringa sia un vettore di caratteri, un puntatore ad una stringa è, in realtà, un puntatore ad un
+puntatore. Un doppio puntatore, quindi, è in grado di definire un vettore multi-dimensionale. Tuttavia, la memoria
+centrale di un computer, è in grado di memorizzare sequenzialmente solamente informazioni sotto forma di vettori
+uni-dimensionali, ma questo non è un problema, in quanto con le dovute accortezze possiamo comunque memorizzare
+informazioni con strutture multi-dimensionali, all'interno di altre strutture non aventi la stessa caratteristica. 
+
+Sinteticamente, potremmo rappresentare questo ultimo concetto in maniera grafica, in questo modo:
+
+<div style="display: flex; justify-content: center; align-items: center; width: 100%">
+    <img 
+        alt="Vettori Multi-dimensionali"
+        src="../assets/4. Puntatori e Vettori/vettori-multidimensionali.png" 
+        style="width: 100%; height: fit-content;" />
+</div>
+
+L'accesso ad uno degli elementi del nostro vettore, viene eseguito mediante un semplice calcolo: 
+`base + (riga_corrente * numero_colonne + colonna_corrente) + sizeof(tipo_vettore)`. Nulla ci proibisce, tuttavia, di
+poter accedere comunque ad elementi in memoria che sono al di fuori dello spazio di memorizzazione del nostro vettore
+multi-dimensionale.
