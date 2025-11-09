@@ -87,3 +87,48 @@ inseriti i membri, l'ordine corretto potrebbe evitare che si utilizzi padding pe
 alla dimensione delle parole. Una buona regola da seguire è sempre quella di registrare per prima i membri che
 possiedono lunghezza maggiore, ed infine, verificare se la dimensione di una variabile possa essere modificata per
 permette un migliore allineamento.
+
+## Alias e `typedef`
+
+Una volta che è stata creata una struttura, se volessimo dichiarare una variabile il cui tipo sia proprio della
+struttura stessa, dovremmo dichiararne il tipo usando la parola `struct`, seguita dal nome della struttura in questione.
+Consideriamo, quindi, questo esempio:
+
+```c
+struct person {
+    char* first_name;
+    char* last_name;
+    uint8_t age;
+};
+
+struct person init_person (char* first_name, char* last_name, uint8_t age)
+{
+    struct person new_person;
+
+    new_person.first_name = first_name;
+    new_person.last_name = last_name;
+    new_person.age = age;
+
+    return new_person;
+}
+
+void print_person (struct person a_person)
+{
+    printf("First Name: %s\n", a_person.first_name);
+    printf("Last Name:  %s\n", a_person.last_name);
+    printf("Age:        %u\n", a_person.age);
+}
+
+int main (const int argc, const char** argv)
+{
+    struct person a_person = init_person("Mario", "Rossi", (uint8_t)29);
+    print_person(a_person);
+    return 0;
+}
+```
+
+Sicuramente, questo codice sembra molto prolisso nella definizione delle variabili di tipo `struct person`. Esiste una
+valida alternativa, rappresentata dall'operatore `typedef`. Mediante questo operatore, possiamo definire degli alias per
+uno specifico tipo. In realtà, ridefinire un tipo mediante `typedef`, non esegue nessun' operazione reale nel nostro
+programma, analogamente non verrà richiesta altra memoria. Sarà compito del compilatore, successivamente, "espandere" le
+definizioni di `typedef` sostituendole con il relativo tipo che hanno ridefinito.
