@@ -1,42 +1,92 @@
 #include <stdio.h>
 #include <stdint.h>
 
+enum age_type {
+    NUMERIC,
+    STRING,
+};
+
+typedef enum age_type AgeType;
+
+union age {
+    uint8_t age_number;
+    char*   age_string;
+};
+
+typedef union age Age;
+
 struct person {
-    char* first_name;
-    char* last_name;
-    uint8_t age;
+    char*   first_name;
+    char*   last_name;
+    AgeType age_type;
+    Age     age;
 };
 
 typedef struct person Person;
 
-Person init_person (char* first_name, char* last_name, uint8_t age)
+union elem {
+    uint8_t number;
+    unsigned char characters[4];
+};
+
+
+Person init_person_as_number (char* first_name, char* last_name, uint8_t age)
 {
     Person person;
 
-    person.first_name = first_name;
-    person.last_name = last_name;
-    person.age = age;
+    person.first_name       = first_name;
+    person.last_name        = last_name;
+    person.age_type         = NUMERIC;
+    person.age.age_number = age;
+
+    return person;
+}
+
+Person init_person_as_string (char* first_name, char* last_name, char* age)
+{
+    Person person;
+
+    person.first_name       = first_name;
+    person.last_name        = last_name;
+    person.age_type         = STRING;
+    person.age.age_string   = age;
 
     return person;
 }
 
 void print_person (Person person)
 {
-    printf("First Name: %s\n", person.first_name);
-    printf("Last Name:  %s\n", person.last_name);
-    printf("Age:        %u\n", person.age);
+    printf("First Name = %s\n", person.first_name);
+    printf("Last Name = %s\n", person.last_name);
+
+    if (person.age_type == NUMERIC) {
+        printf("Age (uint8_t) = %u\n", person.age.age_number);
+        return;
+    }
+
+    printf("Age (char*) = %s\n", person.age.age_string);
 }
 
 int main (const int argc, const char** argv)
 {
-    Person person = init_person("Mario", "Rossi", (uint8_t)29);
+    Person a_person = init_person_as_number("Mario", "Rossi", (uint8_t)29);
+    printf ("sizeof(a_person) = %lu byte\n", sizeof(a_person));
+    print_person(a_person);
 
-    printf ("sizeof(struct person)  = %lu byte\n", sizeof(struct person));
-    printf ("sizeof(Person)         = %lu byte\n", sizeof(Person));
-    printf ("sizeof(uint8_t)        = %lu byte\n", sizeof(uint8_t));
-    printf ("sizeof(char*)          = %lu byte\n", sizeof(char*));
+    Person another_person = init_person_as_string("Luigi", "Verdi", "29");
+    printf ("sizeof(another_person) = %lu byte\n", sizeof(another_person));
+    print_person(another_person);
 
-    print_person(person);
+    union elem elements;
+    elements.number = 10;
+    printf("elements.number = %u\n", elements.number);
+    printf(
+        "elements.characters = [ %d, %d, %d, %d ]\n", 
+        elements.characters[0], 
+        elements.characters[1],
+        elements.characters[2], 
+        elements.characters[3]
+    );
 
     return 0;
 }

@@ -132,3 +132,86 @@ valida alternativa, rappresentata dall'operatore `typedef`. Mediante questo oper
 uno specifico tipo. In realtà, ridefinire un tipo mediante `typedef`, non esegue nessun' operazione reale nel nostro
 programma, analogamente non verrà richiesta altra memoria. Sarà compito del compilatore, successivamente, "espandere" le
 definizioni di `typedef` sostituendole con il relativo tipo che hanno ridefinito.
+
+## Unione di membri diversi
+
+Un unione in C rappresenta la letterale e pratica fusione di diversi tipi di variabile all'interno di un'unica area di
+memoria. L'operazione di unione si realizza in maniera simile alle strutture, mediante l'uso della parola chiave
+`union`. Ad esempio, l'età di una oggetto `Person` potrebbe essere rappresentata sia come un valore numerico senza segno
+a 8bit, sia come un vettore di caratteri. Possiamo esprimere questa dualità attraverso l'uso del costrutto `union`:
+
+```c
+union age {
+    uint8_t age_number;
+    char*   age_string;
+};
+
+typedef union age Age;
+```
+
+Il nuovo tipo `Age` potrà essere in maniera mutuamente esclusiva un numero a 8 bit, oppure una stringa. Tuttavia, come
+verrà rappresentata questa variabile in memoria? In presenza di un'unione, il compilatore utilizzerà un'unica area di
+memoria, la cui dimensione in celle dipende dalla grandezza dell'elemento di maggiore dimensione nell'unione (nel nostro
+caso `char*`). Per comprendere al meglio cosa faccia il compilatore in questo specifico caso, consideriamo il seguente
+esempio:
+
+```c
+union elem {
+    uint8_t number;
+    unsigned char characters[4];
+};
+```
+
+Abbiamo dichiarato un'unione composta da un intero senza segno ad 8 bit, ed un vettore di caratteri di dimensione 4.
+Considerando che l'intero ad 8 bit occuperà esattamente una cella di memoria da 1 byte, e che il vettore di caratteri
+richiederà 4 byte per essere rappresentato in memoria; la dimensione complessiva dell'unione sarà di 4 byte (la
+grandezza dell'elemento più grande dell'unione). Considerando la seguente inizializzazione:
+
+```c
+union elem elements;
+elements.number = 10;
+printf("elements.number = %u\n", elements.number);
+printf(
+    "elements.characters = [ %d, %d, %d, %d ]\n", 
+    elements.characters[0], 
+    elements.characters[1],
+    elements.characters[2], 
+    elements.characters[3]
+);
+```
+
+Considerando che sia `number` che `characters` occupano la stessa area di memoria, l'assegnamento `number = 10`,
+inserirà il valore `10` all'interno dei primi 8 bit utilizzati per rappresentare anche la variable `characters`.
+Tuttavia, questo risultato cambierà in base anche al fatto se l'architettura dell'elaboratore sia basata su [__little
+endian__ o __big endian__](https://it.wikipedia.org/wiki/Ordine_dei_byte).
+
+Prima di concludere questa sezione, è necessario fare un'ultima considerazione. Supponiamo di aver modificato l'esempio
+precedente, in cui l'età di una persona può essere rappresentata come una stringa o un numero intero. Come possiamo
+conoscere il tipo che è stato usato dalla struttura, in presenza di un'unione di più elementi di questa? La soluzione,
+consiste nell'utilizzare un nuovo membro che faccia da discriminante, e ci indichi quando è stato utilizzato un tipo
+nell'unione rispetto ad un altro:
+
+```c
+enum age_type {
+    NUMERIC,
+    STRING,
+};
+
+typedef enum age_type AgeType;
+
+union age {
+    uint8_t age_number;
+    char*   age_string;
+};
+
+typedef union age Age;
+
+struct person {
+    char*   first_name;
+    char*   last_name;
+    AgeType age_type;
+    Age     age;
+};
+
+typedef struct person Person;
+```
