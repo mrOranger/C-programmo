@@ -1,0 +1,18 @@
+#ifndef STARTS_WITH_H
+#define STARTS_WITH_H
+
+#include <CUnit/Basic.h>
+
+void test_starts_with_with_input_string_null_returns_false();
+void test_starts_with_with_search_string_null_returns_false();
+void test_starts_with_with_input_string_and_search_string_null_returns_false();
+void test_starts_with_with_input_string_invalid_returns_false();
+void test_starts_with_with_search_string_invalid_returns_false();
+void test_starts_with_with_input_string_and_search_string_invalid_returns_false();
+void test_starts_with_with_input_string_smaller_than_search_string_returns_false();
+void test_starts_with_returns_false();
+void test_starts_with_returns_true();
+
+CU_pSuite run_start_with_suite();
+
+#endif

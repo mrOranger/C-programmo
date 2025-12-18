@@ -1,10 +1,10 @@
-# Gestione Dinamica della Memoria
-
 - [Semplice Allocazione della Memoria `malloc`](#malloc)
 - [Rilascio della Memoria `free`](#free)
 - [Allocazione con Inizializzazione `calloc`](#calloc)
 - [Riuso della Memoria con `realloc`](#realloc)
 - [Problemi di Sicurezza](#security)
+
+# Gestione Dinamica della Memoria
 
 In un normale elaboratore, la memoria centrale viene divisa in due macro-sezioni: lo _stack_ e lo _heap_. Lo stack è una
 porzione della memoria centrale allocata direttamente dal sistema operativa, ogni volta che un thread viene avviato, e

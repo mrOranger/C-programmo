@@ -1,0 +1,18 @@
+#ifndef TEST_ENDS_WITH_H
+#define TEST_ENDS_WITH_H
+
+#include <CUnit/Basic.h>
+
+void test_ends_with_with_input_string_null_returns_false();
+void test_ends_with_with_search_string_null_returns_false();
+void test_ends_with_with_input_string_and_search_string_null_returns_false();
+void test_ends_with_with_input_string_invalid_returns_false();
+void test_ends_with_with_search_string_invalid_returns_false();
+void test_ends_with_with_input_string_and_search_string_invalid_returns_false();
+void test_ends_with_with_input_string_smaller_than_search_string_returns_false();
+void test_ends_with_returns_false();
+void test_ends_with_returns_true();
+
+CU_pSuite run_ends_with_suite();
+
+#endif
