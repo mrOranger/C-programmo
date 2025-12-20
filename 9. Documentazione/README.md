@@ -1,5 +1,5 @@
-- [Commenti e Documentazione] (#comments-documentation)
-- [Doxygen] (#doxygen)
+- [Commenti e Documentazione](#comments-documentation)
+- [Doxygen](#doxygen)
 
 # Documentazione e Doxygen
 
