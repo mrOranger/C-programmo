@@ -82,7 +82,7 @@ uint8_t includes(void* input_string, void* search_string);
  * string always return 0.
  *
  * @param input_string Pointer to the base string where looking for a certain sequence.
- * @param seach_string Pointer to the string that should be included in the input_string.
+ * @param search_string Pointer to the string that should be included in the input_string.
  *
  * @return Unsinged short int, where 1 indicates that search_string is the final sequence of in input_string, 0 otherwise.
  */
@@ -94,7 +94,7 @@ uint8_t ends_with(void* input_string, void* search_string);
  * return 0.
  *
  * @param input_string Pointer to the input_string where looking for the initial sequence.
- * @param seach_string Pointer to the search_string to check if it is contained inside the input_string.
+ * @param search_string Pointer to the search_string to check if it is contained inside the input_string.
  *
  * @return Unsinged short int, where 1 indicates that search_string is the starting sequence of in input_string, 0 otherwise.
  */
@@ -141,7 +141,7 @@ void* upper(void* input_string);
  * new instance, NULL will be returned.
  *
  * @param input_string Pointer to the input string that will be used as the base part of the new string.
- * @param concat_strin Pointer to the string that will be used to concatenante to the input_string.
+ * @param concat_string Pointer to the string that will be used to concatenante to the input_string.
  *
  * @return New string, represented by the concatenation of input_string with concat_string.
  */
@@ -153,7 +153,7 @@ void* concat(void* input_string, void* concat_string);
  * of count is 0 or an invalid number, then an empty string is returned.
  *
  * @param input_string Pointer to the input strint that will be used as base for the repetitions. 
- * @parem count Number of repetitions.
+ * @param count Number of repetitions.
  *
  * @return New string, that is the repetition of input_string.
  */

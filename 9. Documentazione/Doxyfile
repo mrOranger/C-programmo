@@ -1,0 +1,24 @@
+PROJECT_NAME           = "CString"
+PROJECT_NUMBER         = "0.0.9"
+PROJECT_BRIEF          = "Libreria per gestire le strighe"
+
+INPUT                  = libs/string 
+FILE_PATTERNS          = *.h
+RECURSIVE              = YES
+OUTPUT_DIRECTORY       = docs
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+SOURCE_BROWSER         = YES
+INLINE_SOURCES         = NO
+CALL_GRAPH             = YES
+CALLER_GRAPH           = YES
+HAVE_DOT               = NO
+DOT_IMAGE_FORMAT       = svg
+OPTIMIZE_OUTPUT_FOR_C  = YES
+INPUT_ENCODING         = UTF-8
+USE_MDFILE_AS_MAINPAGE = ./README.md
+HIDE_UNDOC_MEMBERS     = NO
+HIDE_UNDOC_CLASSES     = NO
