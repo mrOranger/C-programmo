@@ -1,8 +1,10 @@
 <div style="display: grid; grip-template-columns: 70% 30%;">
     <div width="70%">
-        - [Introduzione](#introduction)
-        - [Storia del Linguaggio](#history)
-        - [Creazione di un Eseguibile](#execute)
+        <code>
+            - [Introduzione](#introduction)
+            - [Storia del Linguaggio](#history)
+            - [Creazione di un Eseguibile](#execute)
+        </code>
     </div>
     <p id="image-container" align="center">
         <img id="logo" src="assets/logo-c.png" alt="Logo Linguaggio C" style="width: 250px; text-align: center;" />
