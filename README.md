@@ -1,10 +1,10 @@
-- [Introduzione](#introduction)
-- [Storia del Linguaggio](#history)
-- [Creazione di un Eseguibile](#execute)
-
 <p id="image-container" align="center">
     <img id="logo" src="assets/logo-c.png" alt="Logo Linguaggio C" style="width: 250px; text-align: center;" />
 </p>
+
+- [Introduzione](#introduction)
+- [Storia del Linguaggio](#history)
+- [Creazione di un Eseguibile](#execute)
 
 # Introduzione <a id="introduction"></a>
 
