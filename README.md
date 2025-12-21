@@ -2,11 +2,11 @@
 - [Storia del Linguaggio](#history)
 - [Creazione di un Eseguibile](#execute)
 
+# Introduzione <a id="introduction"></a>
+
 <p id="image-container" align="center">
     <img id="logo" src="assets/logo-c.png" alt="Logo Linguaggio C" style="width: 250px; text-align: center;" />
 </p>
-
-# Introduzione <a id="introduction"></a>
 
 Il linguaggio C è uno dei più conosciuti nel panorama dell'informatica, la sua fama è dovuta principalmente a due
 fattori: il suo impiego nello sviluppo dei sistemi operativi UNIX, e la sua semplicità. La sua popolarità e la sua
