@@ -537,7 +537,7 @@ L'uso di questo modificatore è particolarmente utile quando vogliamo dichiarare
 il che ci permetterà di rispariare risorso nella dichiarazione multipla della stessa costante in diverse aree di
 visibilità del programma.
 
-### Funzioni Statiche <a id="static-fuctions"></a>
+### Funzioni Statiche <a id="static-functions"></a>
 
 L'uso del modificatore `static` può essere impiegato anche nella dichiarazione di una funzione. Per spiegare meglio
 quali siano le conseguenze dell'uso di questo modificatore nella dichiarazione di una funzione, consideriamo di aver
