@@ -1,17 +1,13 @@
-<table>
-    <tr>
-        <td width="70%">
-            - [Introduzione](#introduction)
-            - [Storia del Linguaggio](#history)
-            - [Creazione di un Eseguibile](#execute)
-        </td>
-        <td width="30%">
-            <p id="image-container" align="center">
-                <img id="logo" src="assets/logo-c.png" alt="Logo Linguaggio C" style="width: 250px; text-align: center;" />
-            </p>
-        </td>
-    </tr>
-</table>
+<div style="display: grid; grip-template-columns: 70% 30%;">
+    <div width="70%">
+        - [Introduzione](#introduction)
+        - [Storia del Linguaggio](#history)
+        - [Creazione di un Eseguibile](#execute)
+    </div>
+    <p id="image-container" align="center">
+        <img id="logo" src="assets/logo-c.png" alt="Logo Linguaggio C" style="width: 250px; text-align: center;" />
+    </p>
+</div>
 
 # Introduzione <a id="introduction"></a>
 
