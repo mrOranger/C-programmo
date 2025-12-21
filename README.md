@@ -1,6 +1,6 @@
-<div id="image-container" style="width: 100%; display: inline-flex; justify-content: center; align-items:center; padding: 1em 2em">
+<p id="image-container" align="center">
     <img id="logo" src="assets/logo-c.png" alt="Logo Linguaggio C" style="width: 250px; text-align: center;" />
-</div>
+</p>
 
 - [Introduzione](#introduction)
 - [Storia del Linguaggio](#history)
