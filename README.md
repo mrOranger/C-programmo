@@ -2,7 +2,7 @@
 - [Storia del Linguaggio](#history)
 - [Creazione di un Eseguibile](#execute)
 
-<p id="image-container" style="position: absolute; top: 0px; right: 0px;">
+<p id="image-container" align="center;">
     <img id="logo" src="assets/logo-c.png" alt="Logo Linguaggio C" style="width: 250px; text-align: center;" />
 </p>
 
