@@ -1,4 +1,15 @@
-# Tipi, Operatori ed Espressioni
+- [Tipi, Operatori ed Espressioni](#types-operators-expressions)
+- [Tipi Primitivi](#primitive-data-types)
+- [Limiti Numerici](#numerical-limits)
+- [Rappresentazione Numerica Fissa](#fixed-length-representation)
+- [Conversione dei Tipi](#casting)
+- [Modificatori di Accesso](#access-keywords)
+    - [Variabili Costanti](#constant-variables)
+    - [Variabili Statiche](#static-variables)
+    - [Argomenti Costanti](#const-arguments)
+    - [Funzioni Statiche](#static-functions)
+
+# Tipi, Operatori ed Espressione <a id="types-operators-expressions"></a>
 
 L'elemento "atomico" di un programma è costituito da una variable. Non mi dilungherò su cosa sia una variabile in
 qualsiasi linguaggio di programmazione, la cosa che ci interessa sapere, tuttavia, è che i tipi assegnabili ad una
@@ -14,7 +25,7 @@ Qualsiasi operazione che non coinvolga numeri interi o a virgola mobile, deve es
 apposite funzioni. Nel caso specifico delle stringhe, tutte le funzioni utili per la manipolazione delle stringhe, sono
 inserite all'interno della libreria `<string.h>`.
 
-## Tipi Primitivi 
+## Tipi Primitivi <a id="primitive-data-types"></a>
 
 Il linguaggio C supporta solamente quattro tipi primitivi: `char`, `int`, `float` e `double`. Ciascuno di questi tipi, 
 rappresenta un valore numerico, il che può sembrare strano a chi possieda già una qualche familiarità con i linguaggi
@@ -226,7 +237,7 @@ standard:
 * `short` sia almeno di 16 bit, ma che non superi in grandezza quella di `int`.
 * `long` sia di almeno 32 bit e che la dimensione di `int` non superi quella di `long`.
 
-## Limiti Numerici
+## Limiti Numerici <a id="numerical-limits"></a>
 
 Tutte le grandezze precedentemente elencate, sono definite all'interno del file di intestazione `limits.h`. Conoscere le
 grandezze dei dati primitivi all'interno del nostro programma, è fondamentale per programmare in un ambiente
@@ -327,7 +338,7 @@ in virgola mobile. Diversamente, questi sono definiti all'interno di un'altra in
     </tbody>
 </table>
 
-## Rappresentazioni con dimensione fissa
+## Rappresentazioni con Dimensione Fissa <a id="fixed-length-rappresentation"></a>
 
 Per ovviare in parte al problema che è stato prima citato, relativo ad alcuni tipi numerici. Dallo standard `C99` è
 stata introdotta la libreria `stdint.h`. Lo scopo di questa libreria è quello di esporre un insieme di tipi, la cui
@@ -400,7 +411,7 @@ restituisce l'effettiva dimensione di una variabile o di un tipo, sotto forma di
 rappresentato dal tipo `size_t`. Questo operatore è molto utile per leggere l'effettiva rappresentazione di una variabile
 nell'architettura corrente, inoltre, è comunemente restituito da molte funzione della libreria standard del C.
 
-## Conversione dei Tipi
+## Conversione dei Tipi <a id="casting"></a>
 
 Un aspetto fondamentale dei tipi primitivi che abbiamo descritto precedentemente, riguarda la capacità del linguaggio di
 convertire un tipo assegnato ad una variabile in un altro compatibile. Con il termine "compatibile" si intende dire, un
@@ -430,3 +441,146 @@ printf("a_number = %f, has been converted in %ud, loosing some information ...",
 L'istruzione `(unsigned int)a_number;` esegue una conversione esplicita della variabile `a_number` troncando la parte
 frazionaria e forzandola ad essere inserita all'interno di una variabile `unsigned int`. Il compilatore, avvertirà con
 un messaggio della perdita di informazione, nella conversione della variabile.
+
+## Modificatori di accesso <a id="access-keywords"></a>
+
+Insieme alla definizione di un variabile, è possibile applicare un modificatore, che ne modifica il normale
+comportamento all'interno di un programma. I modificatori di accesso più comuni sono: `const` e `static`.
+
+### Variabili Costanti <a id="constant-variables"></a>
+Fino a questo punto, nella dichiarazione di una qualsiasi variabile, che sia essa anche un argomento di una funzione,
+non abbiamo specificato alcun vincolo, se non il tipo di valore assegnabile a questo. Qualora decisdessimo di rendere
+una qualsiasi variabile immutabile, sarà sufficiente anteporre alla dichiarazione della variabile il prefisso `const`.
+
+Prendiamo ad esempio questo piccolo programma, che inizializza ed una una serie di variabili da mostrare in console:
+
+```c
+#include <stdio.h>
+
+int main (const int argc, const char** argv)
+{
+    const int my_constant_variabile = 10;
+    int my_variable = 50;
+
+    printf("Before Assignment, 'my_constant_variable' = %d and 'my_variable' = %d\n", my_constant_variable, my_ariable);
+
+    my_constant_variable = my_variable;
+    my_variable = my_constant_variable;
+
+    printf("After Assignment, 'my_constant_variable' = %d and 'my_variable' = %d\n", my_constant_variable, my_ariable);
+
+    return 0;
+}
+```
+
+La compilazione di questo programma è impossibile, in quanto non è ammissibile modificare il valore inizializzato ad una
+variabile definita come costante. Sebbene in questo caso abbiamo usato il modificatore `const` per una singola
+variabile, nel caso in cui il primo si applichi ad un vettore, o ad un puntatore che si riferisce ad una sequenza di
+elementi. Non sarà possibile modificare la sequenza o ciascun elemento appartenente a quest'ultima,
+
+### Argomenti Costanti <a id="const-arguments"></a>
+
+Il modificatore `const` può anche essere applicato ai parametri di una funzione. Analizzando l'esempio precedente,
+possiamo notare la dicitura:
+
+```c
+int main (const int argc, const char** argv)
+```
+
+ignorando cosa siano a parametri alla funzione main, possiamo notare che, invece, questi siano preceduti entrambi dalla
+parola chiave `const`. All'interno di questa funzione, i parametri non potranno essere modificati.
+
+
+### Variabili Statiche <a id="static-variables"></a>
+
+Oltre che al modificatore `const`, alla dichiarazione di una variabile può essere applicata anche la parola chiave
+`static`. Potremmo definire una variabile __statica__, come una variabile il cui ciclo di vita è indipendente dalla
+visibilità del contesto in cui inserita. 
+
+Analizziamo che cosa accade se usassimo questo modificatore ad una variabile locale di una funzione:
+
+
+```c
+float sum_with_scaling_factor (const int first, const int second)
+{
+    static float scaling_factor = 2.0;
+    const int result = (first + second) * scaling_factor;
+    scaling_factor = scaling_factor + 2.0;
+    return result;
+}
+
+int main (const int argc, const char** argv)
+{
+    float result = sum_with_scaling_factor(1, 2);
+    result = sum_with_scaling_factor(1, 2);
+
+    printf("'sum_with_scaling_factor' = %f\n", result);
+    return 0;
+}
+```
+
+Comprensibilmente, potremmo aspettarci di vedere a video il valore `6`, quando in realtà verrà visto il valore `12`.
+Questo comportamento apparentemente "anomalo" è spiegato dalla presenza del modificatore `static` associato alla variabile
+`result`.
+
+L'uso del modificatore `static` rende di fatto la variabile permamente in memoria, dissociandola dallo scope che vi
+associa la funzione. Pertanto, nell'istruzione `result = sum_with_scaling_factor(1, 2)`, sebbene incontriamo nuovamente
+la dichiarazione `static float scaling_factor = 2.0`, il programma è autonomamente in grado di capire che esiste già una
+variabile chiamata `scaling_factor` in memoria, è riprendere il valore precedentemete associatovi a questa, come se
+ignorasse quest'inizializzazione.
+
+In termini generali, possiamo dire che qualsiasi variabile a cui è associato il modificatore `static`, che sia globale o
+locale, viene dissociata dal proprio scope. Pertanto, la variabile statica avrà un ciclo di vita indipendente da dove si
+trova. 
+
+L'uso di questo modificatore è particolarmente utile quando vogliamo dichiarare costanti che non cambieranno nel tempo,
+il che ci permetterà di rispariare risorso nella dichiarazione multipla della stessa costante in diverse aree di
+visibilità del programma.
+
+### Funzioni Statiche <a id="static-fuctions"></a>
+
+L'uso del modificatore `static` può essere impiegato anche nella dichiarazione di una funzione. Per spiegare meglio
+quali siano le conseguenze dell'uso di questo modificatore nella dichiarazione di una funzione, consideriamo di aver
+creato un file denonimato `operations.c` al cui interno sono dichiarate le seguente funzioni:
+
+```c
+static int sum (const int first, const int second)
+{
+    return first + second;
+}
+
+int difference (const int first, const int second)
+{
+    return sum(first, -second);
+}
+```
+
+Immaginiamo di voler usare queste funzioni in questo modo:
+
+```c
+#include <stdio.h>
+
+#include "operations.c"
+
+int main (const int argc, const char** argv)
+{
+    int sum_result = sum(1, 2);
+    int difference_result = difference(1, 2);
+
+    printf("'sum_result' = %d, 'difference_result = %d'\n", sum_result, difference_result);
+
+    return 0;
+}
+```
+
+Non sarà mai possibile compilare questo programma, perché non siamo in grado di usare la funzione `sum` all'interno del
+file `main.c`, in cui ne è definito l'uso.
+
+E' bene sapere che la dichiarazione di una funzione, normalmente, definisce la visibilità della funzione stessa come
+globale e disponibile all'interno di tutto il programma. Il modificatore `static` applicato in questa maniera ad una 
+funzione, limita la visibilità della funzione stessa all'interno del file in cui questa è definita.
+
+Di conseguenza, l'uso di `static` per una funzione permette di definire il meccanismo di [__Information
+Hiding__](https://en.wikipedia.org/wiki/Information_hiding). Dichiarando una funzione in questo modo, siamo in grado di
+limitare la visibilità della stessa all'interno del file in cui è definita, come se usassimo il modificatore di
+visibilità `private` per un'attributo di una classe.

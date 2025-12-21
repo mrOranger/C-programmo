@@ -3,6 +3,8 @@
 #include <float.h>
 #include <stdint.h>
 
+float sum_with_scaling_factor(const int first, const int second);
+
 int main (int argc, const char** argv) {
 
     printf("sizeof(char) = %lu byte\n", sizeof(char));
@@ -40,5 +42,30 @@ int main (int argc, const char** argv) {
     unsigned short int another_number = (unsigned short int)a_number;
     printf("a_number = %f has been converted in %u, loosing some information ...\n", a_number, another_number);
 
+    const int my_constant_variable = 10;
+    int my_variable = 50;
+    int* my_pointer = (int*)&my_constant_variable;
+
+    printf("Before: my_variable = %d, my_constant_variable = %d\n", my_variable, my_constant_variable);
+
+    *my_pointer = my_variable;
+
+    printf("After: my_variable = %d, my_constant_variable = %d\n", my_variable, my_constant_variable);
+
+    float sum = sum_with_scaling_factor(1, 2);
+    sum = sum_with_scaling_factor(1, 2);
+
+    printf("'sum_with_scaling_factor' = %f\n", sum);
+
+
     return 0;
 }
+
+float sum_with_scaling_factor (const int first, const int second)
+{
+    static float scaling_factor = 2.0;
+    const int result = (first + second) * scaling_factor;
+    scaling_factor = scaling_factor + 2.0;
+    return result;
+}
+
