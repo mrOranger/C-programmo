@@ -1,8 +1,23 @@
-<div style="min-width: 100px; max-width: 200px; display: inline-flex; justify-content:center; align-items:center;">
-    <img src = "assets/logo-c.png" alt = "Logo Linguaggio C" style = "max-width: 200px; padding: 1em 2em;" />
+<div style="
+    width: 100%; 
+    display: inline-flex; 
+    justify-content: center; 
+    align-items:center;
+    padding: 1em 2em">
+
+    <img 
+        src="assets/logo-c.png"
+        alt="Logo Linguaggio C"
+        style="max-width: 200px;"
+    />
+
 </div>
 
-# Introduzione     
+- [Introduzione](#introduction)
+- [Storia del Linguaggio](#history)
+- [Creazione di un Eseguibile](#execute)
+
+# Introduzione <a id="introduction"></a>
 
 Il linguaggio C è uno dei più conosciuti nel panorama dell'informatica, la sua fama è dovuta principalmente a due
 fattori: il suo impiego nello sviluppo dei sistemi operativi UNIX, e la sua semplicità. La sua popolarità e la sua
@@ -29,7 +44,7 @@ Lo scopo di questa repository è quella di approfondire il linguaggio C, ed impi
 delle Strutture Dati. La repository non è rivolta ad un pubblico neofita, in quanto, per comodità verranno saltati
 concetti relativamente scontati ad un programmatore, riguardandi la [Programmazione Imperativa](https://it.wikipedia.org/wiki/Programmazione_imperativa).
 
-## Storia del Linguaggio.
+# Storia del Linguaggio <a id="history"></a>
 
 Il C nasce nei Bell Laboratories tra il 1969 e il 1973 e creato da [Dennis Ritchie](https://it.wikipedia.org/wiki/Dennis_Ritchie) 
 come evoluzione del linguaggio B sviluppato da [Ken Thompson](https://it.wikipedia.org/wiki/Ken_Thompson) nel 1970 per 
@@ -57,7 +72,7 @@ fu principalmente una revisione tecnica che corresse difetti del C11.
 * `2023`. L'ultimo standard, C23, introduce ulteriori miglioramenti come attributi standardizzati, nuovi tipi e 
 funzionalità moderne mantenendo la filosofia originale del linguaggio.
 
-## Crezione di un eseguibile
+# Crezione di un Eseguibile <a id="execute"></a>
 
 Prima di partire con l'effettiva spiegazione del linguaggio, analizziamo come sia possibile, a partire da un semplice
 programma che stampa in console la stringa `Hello World from C`, generare un programma da poter eseguire sul calcolatore
