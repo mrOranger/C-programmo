@@ -1,8 +1,5 @@
 <div style="width: 100%; display: inline-flex; justify-content: center; align-items:center; padding: 1em 2em">
-    <img src="assets/logo-c.png"
-        alt="Logo Linguaggio C"
-        style="max-width: 200px;"
-    />
+    <img src="assets/logo-c.png" alt="Logo Linguaggio C" style="max-width: 200px;" />
 </div>
 
 - [Introduzione](#introduction)
