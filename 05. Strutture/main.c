@@ -29,6 +29,11 @@ union elem {
     unsigned char characters[4];
 };
 
+typedef enum Boolean {
+    TRUE = 't',
+    FALSE = 'c'
+};
+
 
 Person init_person_as_number (char* first_name, char* last_name, uint8_t age)
 {
