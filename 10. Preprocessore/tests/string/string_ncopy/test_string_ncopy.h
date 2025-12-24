@@ -1,0 +1,15 @@
+#ifndef TEST_STRING_NCOPY_H
+#define TEST_STRING_NCOPY_H
+
+#include <CUnit/Basic.h>
+
+void test_string_ncopy_with_null_input_string_should_return_null();
+void test_string_ncopy_with_starting_index_greater_than_string_size_should_return_null();
+void test_string_ncopy_with_starting_index_greater_than_ending_index_string_should_return_null();
+void test_string_ncopy_with_ending_index_greater_than_string_length_string_should_new_string();
+void test_string_ncopy_with_starting_index_equals_zero_should_new_string();
+void test_string_ncopy_should_new_string();
+
+CU_pSuite run_string_ncopy_suite();
+
+#endif
