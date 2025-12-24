@@ -1,37 +1,16 @@
 #include <stdio.h>
-#include <stdint.h>
 
-#define MAX_LENGTH 100
-
-#define swap(first, second, temp) { temp = first; first = second; second = temp; }
-
-void print_cycle (const int length_to_print)
-{
-    if (length_to_print < MAX_LENGTH)
-    {
-        for (uint8_t index = 0; index <  length_to_print; index = index + 1)
-        {
-            printf(" index = %d / %d \n", index, MAX_LENGTH);
-        }
-    }
-}
-
-void swap_variables(int first, int second)
-{
-    int temp;
-
-    swap(first, second, temp);
-
-    printf("Swapped variables: first = %d, second = %d\n", first, second);
-}
-
+#include "libs/string/string.h"
 
 int main (const int argc, const char** argv)
 {
-    int first = 10, second = 20;
+    void* input_string = "ab123cd";
+    size_t starting_index = 2;
+    size_t n_bytes = 3;
 
-    print_cycle(10);
-    swap_variables(first, second);
+    void* string_copy = string_ncopy(input_string, n_bytes, starting_index);
+
+    printf("%s - %d\n", string_copy, string_length(string_copy));
 
     return 0;
 }
