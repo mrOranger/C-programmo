@@ -4,13 +4,11 @@
 
 int main (const int argc, const char** argv)
 {
-    void* input_string = "ab123cd";
-    size_t starting_index = 2;
-    size_t n_bytes = 3;
+    String* input_string = create_from_string("AB123CD");
+    String* pattern = create_from_string("123");
+    String* string_to_replace = create_from_string("X");
 
-    void* string_copy = string_ncopy(input_string, n_bytes, starting_index);
-
-    printf("%s - %d\n", string_copy, string_length(string_copy));
+    String* updated_string = replace(input_string, pattern, string_to_replace);
 
     return 0;
 }

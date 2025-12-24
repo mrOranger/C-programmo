@@ -5,7 +5,7 @@
 
 void test_replace_with_null_string_to_replace_returns_null();
 void test_replace_with_invalid_string_to_replace_returns_null();
-void test_replace_with_empty_string_to_replace_returns_empty_string();
+void test_replace_with_empty_string_to_replace_returns_null();
 
 void test_replace_with_valid_string_to_replace_and_null_replace_pattern_returns_null();
 void test_replace_with_valid_string_to_replace_and_invalid_replace_pattern_returns_null();

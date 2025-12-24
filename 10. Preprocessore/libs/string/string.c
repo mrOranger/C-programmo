@@ -385,49 +385,104 @@ void* replace(void* input_string, void* replace_pattern, void* string_to_replace
         return NULL;
     }
 
+    if (size(string_to_replace) == 0)
+    {
+        return create_from_string(((String*) input_string)->internal_string);
+    }
+
     const int32_t replace_index = index_of(input_string, replace_pattern);
 
     if (replace_index == -1) {
         return create_from_string(value(input_string));
     }
 
+    if (size(string_to_replace) == size(replace_pattern)) 
+    {
+        size_t string_to_replace_index = 0;
+        char* new_string = (char*)calloc(size(input_string) + 1, sizeof(char));
+
+        for (size_t index = 0; index < size(input_string); index++)
+        {
+            if (index >= replace_index && string_to_replace_index < size(replace_pattern))
+            {
+                new_string[index] = ((String*)string_to_replace)->internal_string[string_to_replace_index++];
+
+                continue;
+            }
+
+            new_string[index] = ((String*)input_string)->internal_string[index];
+
+            continue;
+        }
+
+        return create_from_string(new_string);
+    }
+
     if (size(string_to_replace) > size(replace_pattern)) 
     {
-        return NULL;
+        size_t prefix_index = 0;
+        size_t string_index = 0;
+        size_t postfix_index = replace_index + size(replace_pattern);
+
+        size_t new_string_chars = size(string_to_replace) - size(replace_pattern);
+
+        char* new_string = (char*)calloc(size(input_string) + new_string_chars + 1, sizeof(char));
+
+        for (size_t index = 0; index < size(input_string) + new_string_chars; index++)
+        {
+            if (index < replace_index)
+            {
+                new_string[index] = ((String*)input_string)->internal_string[prefix_index++];
+
+                continue;
+            }
+
+            if (index >= replace_index + size(string_to_replace))
+            {
+                new_string[index] = ((String*)input_string)->internal_string[postfix_index++];
+
+                continue;
+            }
+
+            new_string[index] = ((String*)string_to_replace)->internal_string[string_index++];
+        }
+
+        return create_from_string(new_string);
     }
 
     if (size(string_to_replace) < size(replace_pattern)) 
-    {
-        size_t new_length = size(input_string) - (size(replace_pattern) - size(string_to_replace));
+    {        
+        size_t prefix_index = 0;
+        size_t string_index = 0;
+        size_t postfix_index = replace_index + size(replace_pattern);
 
-        char* reduced_string = (char*)calloc(new_length + 1, sizeof(char));
+        size_t missing_chars = size(replace_pattern) - size(string_to_replace);
 
-        for (uint8_t index = 0; index < replace_index; index++)
+        char* new_string = (char*)calloc(size(input_string) - missing_chars + 1, sizeof(char));
+
+        for (size_t index = 0; index < size(input_string) - missing_chars; index++)
         {
-            reduced_string[index] = ((String*)input_string)->internal_string[index];
+            if (index < replace_index)
+            {
+                new_string[index] = ((String*)input_string)->internal_string[prefix_index++];
+
+                continue;
+            }
+
+            if (index >= replace_index + size(string_to_replace))
+            {
+                new_string[index] = ((String*)input_string)->internal_string[postfix_index++];
+
+                continue;
+            }
+
+            new_string[index] = ((String*)string_to_replace)->internal_string[string_index++];
         }
 
-        for (u_int8_t index = 0; index < size(replace_pattern); index++)
-        {
-            reduced_string[index + replace_index] = ((String*)string_to_replace)->internal_string[index];
-        }
-
-        for (u_int8_t index = 0; index < size(input_string) - replace_index - size(replace_pattern); index++)
-        {
-            reduced_string[index + size(replace_pattern) + replace_index] = ((String*)replace_pattern)->internal_string[index];
-        }
-
-
-        void* new_string = create_from_string(reduced_string);
-
-        free(reduced_string);
-
-        return new_string;
+        return create_from_string(new_string);
     }
 
-    char* new_string = (char*)calloc(size(input_string) + 1, sizeof(char));
-
-    return create_from_string(new_string);
+    return NULL;
 }
 
 void destroy(void* string)
@@ -441,7 +496,6 @@ void destroy(void* string)
         free(string);
     }
 }
-
 
 size_t string_length(void* source)
 {

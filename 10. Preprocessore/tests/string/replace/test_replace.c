@@ -27,7 +27,7 @@ void test_replace_with_invalid_string_to_replace_returns_null()
     CU_ASSERT_PTR_NULL(updated_string);
 }
 
-void test_replace_with_empty_string_to_replace_returns_empty_string()
+void test_replace_with_empty_string_to_replace_returns_null()
 {
     String* input_string = create_empty();
     String* pattern = create_empty();
@@ -35,8 +35,7 @@ void test_replace_with_empty_string_to_replace_returns_empty_string()
 
     String* updated_string = replace(input_string, pattern, string_to_replace);
 
-    CU_ASSERT_PTR_NOT_NULL(updated_string);
-    CU_ASSERT_EQUAL(equals(input_string, create_empty()), 1);
+    CU_ASSERT_PTR_NULL(updated_string);
 }
 
 void test_replace_with_valid_string_to_replace_and_null_replace_pattern_returns_null()
@@ -106,7 +105,7 @@ void test_replace_with_valid_string_to_replace_and_valid_replace_pattern_and_emp
     String* updated_string = replace(input_string, pattern, string_to_replace);
 
     CU_ASSERT_PTR_NOT_NULL(updated_string);
-    CU_ASSERT_EQUAL(equals(updated_string, create_from_string("ABCD")), 1);
+    CU_ASSERT_EQUAL(equals(updated_string, create_from_string("AB123CD")), 1);
 }
 
 void test_replace_with_valid_string_to_replace_and_unknown_replace_pattern_returns_new_string()
@@ -182,7 +181,7 @@ CU_pSuite run_replace_suite()
     CU_add_test(
         suite, 
         "replace with valid empty to replace should return NULL", 
-        test_replace_with_empty_string_to_replace_returns_empty_string
+        test_replace_with_empty_string_to_replace_returns_null
     );
 
     CU_add_test(
