@@ -2,7 +2,8 @@
     - [Formattazione dei Dati in Uscita con `printf`](#printf)
         - [Funzioni con un Numero Variabile di Argomenti](#varargs)
     - [Formattazione dei Dati in Entrata con `scanf`](#scanf)
-
+    - [Lettura e Scrittura da File](#file-io)
+    - [Gestione degli Errori](#exceptions)
 
 # Input Output <a id="io"></a>
 
@@ -117,3 +118,63 @@ Le macro in questione, vengono usate al seguente scopo:
 * Infine, `va_end` rilascia le risorse precedentemente allocate.
 
 ## Formattazione dei Dati in Entrata con `scanf` <a id="scanf"></a>
+
+Se la funzione `printf` visualizza una stringa, formattata seguendo delle precise istruzioni di composizione, sullo
+standard output. La funzione `scanf` legge delle informazioni direttamente dallo standard input, basandosi sul formato
+specifo secondo il quale queste informazioni verranno fornite. 
+
+Questa, infatti, è la specifica della funzione `scanf` secondo la libreria standard:
+
+```c
+int scanf (const char restrict* format, ...);
+```
+
+La funzione, come si può vedere, riceve un numero variabile di argomenti. Diversamente dalla funzione `printf`, è
+necessario che questo numero variabile di argomenti siano tutti quanti dei puntatori. Infatti, i puntatori verranno
+usati per inserire all'interno delle variabili puntate, i valori estratti dalla stringa che ne specifica la
+formattazione.
+
+In maniera del tutto simile, la stringa che specifica la formattazione della stringa proveniente dallo standard input,
+utilizza una serie di caratteri speciali, tutti dei quali preceduti dal carattere `%`, ed a cui possiamo rifarci
+leggendo la tabella precedentemente descritta per la funzione `printf`.
+
+Ad esempio, volendo leggere la data corrente in formato `dd/mm/yyyy`, e specificata dall'utente usando lo standard
+input, possiamo utilizzare in questo modo la funzione `scanf`:
+
+```c
+#include <stdio.h>
+#include <stdint.h>
+
+int main (const int argc, const char** argv)
+{
+    uint32_t day, month, year;
+
+    printf("Inserisci la data corrente in formato dd/mm/yyyy: ");
+    scanf("%u/%u/%u", &day, &month, &year);
+    printf("Il giorno corrente è: %u/%u/%u\n", day, month, year);
+}
+```
+
+Così come accade per la funzione `printf`, la quale possiede l'alternativa `sprintf`. Anche per la funzione `scanf`
+esiste la controparte `sscanf`, la quale, inserirà i dati estratti dallo standard input, ed accuratamente formattati,
+all'interno di una stringa. Possiamo modificare l'esempio precedente, inserendo la stringa estratta da
+quest'elaborazione, all'interno di un'altra stringa, e visualizzarne il contenuto:
+
+```c
+#include <stdio.h>
+#include <stdint.h>
+
+int main (const int argc, const char** argv)
+{
+    char* current_date = (char*)calloc(20, sizeof(char));
+    uint32_t day, month, year;
+
+    current_date = "26/12/2025";
+    sscanf(current_date, "%u/%u/%u", &day, &month, &year);
+    printf("Il giorno corrente è: %u/%u/%u\n", day, month, year);
+}
+```
+
+## Lettura e Scrittura da File <a id="file-io"></a>
+
+## Gestione delle Eccezioni <a id="exceptions"></a>
