@@ -1,5 +1,6 @@
 - [Input Output](#io)
     - [Formattazione dei Dati in Uscita con `printf`](#printf)
+        - [Funzioni con un Numero Variabile di Argomenti](#varargs)
     - [Formattazione dei Dati in Entrata con `scanf`](#scanf)
 
 
@@ -61,5 +62,58 @@ int (const int argc, const char** argv)
 La cosa interessante di questo esempio, è l'assegnazione automatica del valore `\0` alla fine della stringa
 `pointer_to_string`. Inoltre, analogamente a quanto accade per la funzione `printf`, mediante l'uso dei caratteri `%`,
 possiamo controllare la formattazione delll'output, passando una lista dinamica di parametri alla funzione `sprintf`.  
+
+### Funzioni con un Numero Variabile di Argomento <a id="varargs"></a>
+
+E' arrivato il momento di parlare delle funzioni che ammettono un numero non ben definito di argomenti come input. Fino
+a questo punto, infatti, abbiamo supposto che esista un qualcosa di sconosciuto, un meccanismo attraverso il quale sia
+possibile specificare una serie di parametri alla funzione `printf`, senza che si sappia precisamente quanti e quali
+argomenti questa funzione accetti.
+
+Per implementare una funzione che accetti un numero variabile di argomenti, è necessario che vengano usate alcune
+macro. Le macro in questione possiedono un'implementazione diversa a seconda dell'architettura in uso, tuttavia, una
+serie di definizioni standard è presente all'interno della libreria `stdargs`.
+
+Consideriamo il caso in cui vogliamo implementare una funzione che calcoli il numero minimo di elementi, tra quelle
+registrati come parametri di una funzione. Una valida implementazione di questa funzione, potrebbe essere la seguente:
+
+```c
+#include <stdarg.h>
+#include <limits.h>
+
+int min (const int args_number, ...)
+{
+    va_list args;
+    int minimum = INT_MAX;
+    va_start(args, args_number);
+
+    for (int index = 0; index < args_number; index = index + 1)
+    {
+        int current_min = va_arg(args, int);
+
+        if (current_min < minimum)
+        {
+            minimum = current_min;
+        }
+    }
+
+    va_end(args);
+
+    return minimum;
+}
+```
+
+Notiamo la presenza delle seguenti macro `va_list`, `va_start`, `va_arg` e `va_end`. Oltre che a queste macro, è
+necessario tenere a mente che l'intestazione della funzione, richiede l'uso di `...`, per indicare che è previsto un
+insime variabile di argomenti.
+
+Le macro in questione, vengono usate al seguente scopo:
+
+* `va_list` istanzia la lista variabile di argomenti.
+* `va_start` inizializza la lista variabile di argomenti, con il numero effettivo che ci si aspetta.
+* `va_arg` legge l'argomento corrente. Da notare che, la funzione richiede il tipo di argomento che è necessario leggere
+  in questo momento. La funzione `printf` utilizza i marcatori inseriti all'interno della stringa da formattare, per
+  determinare quale sia il tipo corrente di parametro.
+* Infine, `va_end` rilascia le risorse precedentemente allocate.
 
 ## Formattazione dei Dati in Entrata con `scanf` <a id="scanf"></a>
