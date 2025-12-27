@@ -2,6 +2,7 @@
     - [Formattazione dei Dati in Uscita con `printf`](#printf)
         - [Funzioni con un Numero Variabile di Argomenti](#varargs)
     - [Formattazione dei Dati in Entrata con `scanf`](#scanf)
+    - [Input Output Generalizzato](#generic-io)
     - [Lettura e Scrittura da File](#file-io)
     - [Gestione degli Errori](#exceptions)
 
@@ -175,6 +176,52 @@ int main (const int argc, const char** argv)
 }
 ```
 
+## Input Output Generalizzato <a id="generic-io"></a>
+
+Siamo adesso giunti alla trattazione dell'argomento file. Fino a questo punto, infatti, le operazioni di lettura e
+scrittura hanno coinvolto solamente lo standard input e lo standard output. Non deve stupirci, quindi, che le medesime
+operazioni sono comunque valide per un file.
+
+Quando viene avviato un programma in C, di default, la libreria standard apre tre tipi diversi di flussi per l'input e
+l'output , restituendone i relativi puntatori che possono essere usati in tutto il programma. Questi tre flussi sono:
+
+* Lo __standard input__ utilizzabile mediante l'oggetto `stdin`;
+* Lo __standard output__ utilizzabile mediante l'oggetto `stdout`;
+* Infine, lo __standard error__, meno conosciuto rispetto agli altri, ma utilizzabile con l'oggetto `stderr`.
+
+Nell'implementazione della libreria standard, si è deciso di dedicare un flusso separato alla gestione degli errori. Con
+la conseguenza di aver implementato un flusso denominato `stderr`. La trattazione di questo flusso, verrà fatta nel
+paragrafo successivo.
+
+L'idea di trattare i flussi di I/O esattamente come se fossero dei file, deriva dall'approccio UNIX-like con il quale è
+stata sviluppata la libreria standard del C. Non dovrà stupirci che le seguenti funzioni verranno usate in maniera
+simile per scrivere su un file:
+
+```c
+#include <stdio.h>
+
+int main (const int argc, const char** argv)
+{
+    uint8_t random_integer;
+
+    fprintf(stdout, "Sto scrivendo sullo standard output, mediante la funzione 'fprintf': \n");
+    fscanf(stdin, "%u", &random_integer);
+
+    printf("Sto scrivendo sullo standard output, mediante la funzione 'printf': \n");
+    scanf("%u", &random_integer);
+
+    return 0;
+}
+```
+
+La differenza tra le funzioni `fprintf` - `printf` e `fscanf` - `scanf`, consiste solamente nella capacità delle prime
+di reindirizzare le operazioni di input-output verso uno specifico flusso di dati. Vedremo come per scrivere e/o leggere
+su un file, sarà sufficiente usare le medesime funzioni ma specificando un puntatore diverso da `stdin` e `stdout`.
+
 ## Lettura e Scrittura da File <a id="file-io"></a>
+
+Adesso che abbiamo capito che un flusso di I/O è trattabile esattamente come se fosse un flusso verso un file. Possiamo
+procedere alla descrizione della procedura con la quale viene aperto un canale di comunicazione verso il file, e come è
+possibile eseguire delle operazioni su questo.
 
 ## Gestione delle Eccezioni <a id="exceptions"></a>

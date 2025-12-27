@@ -25,6 +25,16 @@ int main (const int argc, const char** argv)
     sscanf(current_date, "%u/%u/%u", &day, &month, &year);
     printf("Il giorno corrente è: %u/%u/%u\n", day, month, year);
 
+    uint32_t random_integer;
+
+    fprintf(stdout, "Sto scrivendo sullo standard output, mediante la funzione 'fprintf': ");
+    fscanf(stdin, "%u", &random_integer);
+    fprintf(stdout, "Sto scrivendo sullo standard output, mediante la funzione 'fprintf', il valore %u.\n", random_integer);
+
+    printf("Sto scrivendo sullo standard output, mediante la funzione 'printf': ");
+    scanf("%u", &random_integer);
+    printf("Sto scrivendo sullo standard output, mediante la funzione 'printf', il valore %u.\n", random_integer);
+
     return 0;
 }
 
