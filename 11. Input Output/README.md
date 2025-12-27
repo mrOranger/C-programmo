@@ -5,7 +5,6 @@
 - [Input Output Generalizzato](#generic-io)
 - [Lettura e Scrittura da File](#file-io)
 - [Gestione degli Errori](#exceptions)
-- [CRM Clienti](#example)
 
 # Input Output <a id="io"></a>
 
@@ -414,14 +413,3 @@ uint8_t safe_write_file (const char* path, const char* string)
     return written_chars;
 }
 ```
-
-# CRM Clienti <a id="example"></a>
-
-Per concludere questo capitolo, e fare un riassunto finale delle funzionalità che abbiamo visto, implementeremo un
-semplice CRM che permette di gestire i clienti di un negozio. Consideriamo il seguente scenario, molto semplificato:
-
-> Un negozio vuole gestire la propria lista dei clienti. Ciascun cliente possiede un nome, cognome, ed un codice
-> fiscale. In qualsiasi momento, è possibile registrare un nuovo cliente, modificarne uno già precedentemente
-> registrato, oppure rimuoverlo dalla lista, basandosi sul codice fiscale che deve essere un attributo univoco per
-> ciascun cliente e costituito esattamente da 16 caratteri alfanumerici. I clienti vengono memorizzati in un file
-> specifico, sul quale possono essere serializzati o de-serializzati.

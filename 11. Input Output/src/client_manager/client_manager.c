@@ -26,7 +26,7 @@ void save (const client_manager_t* client_manager)
         return;
     }
 
-    FILE* file_pointer = fopen("/Users/edooranger/Lavoro/C-programmo/11. Input Output/clients.dat", "a");
+    FILE* file_pointer = fopen("...", "a");
 
     if (file_pointer == NULL)
     {
@@ -49,7 +49,7 @@ void save (const client_manager_t* client_manager)
 
 void load ()
 {
-    FILE* file_pointer = fopen("/Users/edooranger/Lavoro/C-programmo/11. Input Output/clients.dat", "r");
+    FILE* file_pointer = fopen("...", "r");
 
     if (file_pointer == NULL)
     {
