@@ -5,6 +5,7 @@
 #include <stdint.h>
 
 int min (const int args_number, ...);
+uint8_t write_file (const char* path, const char* string);
 
 int main (const int argc, const char** argv)
 {
@@ -35,6 +36,8 @@ int main (const int argc, const char** argv)
     scanf("%u", &random_integer);
     printf("Sto scrivendo sullo standard output, mediante la funzione 'printf', il valore %u.\n", random_integer);
 
+    write_file("/Users/edooranger/Lavoro/C-programmo/file.dat", "Hello World from File!");
+
     return 0;
 }
 
@@ -58,3 +61,28 @@ int min (const int args_number, ...)
 
     return minimum;
 }
+
+uint8_t write_file (const char* path, const char* string)
+{
+    FILE* file_pointer = fopen(path, "a");
+    uint8_t written_chars = 0;
+
+    if (file_pointer == NULL)
+    {
+        fprintf(stderr, "Cannot open file %s\n", path);
+        return written_chars;
+    }
+
+    for (uint8_t index = 0; string[index] != '\0'; index++) 
+    {
+        int current_written_chars = putc(string[index], file_pointer);
+
+        if (current_written_chars > 0) 
+        {
+            written_chars = written_chars + 1;
+        }
+    }
+
+    return written_chars;
+}
+

@@ -224,4 +224,130 @@ Adesso che abbiamo capito che un flusso di I/O è trattabile esattamente come se
 procedere alla descrizione della procedura con la quale viene aperto un canale di comunicazione verso il file, e come è
 possibile eseguire delle operazioni su questo.
 
+Prima di mostrare le operazioni di lettura e scrittura da file, è necessario sapere che il processo è preceduto da delle
+operazioni preliminari, da eseguire in sequenza per permette al sistema operativo di aprire e chiudere correttamente un
+file.
+
+La prima cosa di cui abbiamo bisogno è un puntatore alla struttura `FILE` definita all'interno della libreria
+`stdio.h`. Questo puntatore viene usato dalle funzioni che vedremo di seguito, per leggere, scrivere e permettere alla
+libreria standard di leggere i meta-dati che permettono di eseguire correttamente le operazioni elencate prima.
+
+Una volta ottenuto questo puntatore, il passo successivo è richiedere al sistema operativo di aprire il file in
+questione. L'operazione di apertura è eseguita dalla funzione `fopen` (File Open), la cui intestazione è descritta dalla
+libreria standard come:
+
+```c
+FILE* fopen (const char* restrict path, const char* restrict mode);
+```
+
+Questa funzione richiede il percorso del file che si vuole aprire, e la modalità con la quale si vuole aprire il file in
+questione. Le modalità elencate dalla libreria standard sono le seguenti:
+
+* `r` (Read) apre il file in modalità sola lettura.
+* `w` (Write) apre il file in modalità lettura-scrittura.
+* `a` (Append) apre il file in modalità di scrittura, spostando il cursore alla fine del file.
+
+Come possiamo notare, la funzione restituisce un puntatore ad una struttura `FILE`, la quale potrà essere usata per le
+operazioni da eseguire sul file in questione. Tuttavia, potrebbero sorgere dei problemi all'apertura del file,
+sopratutto quando un altro processo ha già aperto il file e sta eseguendo delle operazioni su questo. In caso di errore,
+fortunatamente, viene restituito `NULL`. Dunque, è buona norma controllare che il puntatore sia valido, prima di
+eseguire qualsiasi operazioni, onde evitare di incorrere in eccezioni non controllate. Nel caso in cui il file non
+esista, fortunatamente, esso viene creato, avente dei permessi coerenti con quelli specificati durante l'operazione di
+apertura.
+
+Una volta che il file è stato aperto correttamente, si può procedere con le operazioni di lettura e scrittura. Queste
+operazioni sono eseguite su un file mediante un puntatore specifico, il quale viene di volta in volta spostato al
+carattere o alla riga successiva. Le operazioni più semplici sono:
+
+* `int getc(FILE* fp)`, che legge il byte puntato, e facendo avanzare il puntatore di un byte, al carattere successivo.
+* `int putc(int value, FILE* fp)` che scrive il carattere `value` sul puntatore corrente, restituendo il carattere
+  scritto, ed avanzando il puntatore di un byte, puntato al carattere successivo.
+
+Ad esempio, supponiamo di voler scrivere una stringa su un file specifico. Potremmo implementare questo programma in
+questo modo:
+
+```c
+uint8_t write_file (const char* path, const char* string)
+{
+    FILE* file_pointer = fopen(path, "a");
+    uint8_t written_chars = 0;
+
+    if (file_pointer == NULL)
+    {
+        fprintf(stderr, "Cannot open file %s\n", path);
+        return written_chars;
+    }
+
+    for (uint8_t index = 0; string[index] != '\0'; index++) 
+    {
+        int current_written_chars = putc(string[index], file_pointer);
+
+        if (current_written_chars > 0) 
+        {
+            written_chars = written_chars + 1;
+        }
+    }
+
+    return written_chars;
+}
+```
+
+L'esempio è relativamente semplice, e come possiamo notare, segue lo schema che abbiamo definito. Per prima cosa bisogna
+usare la funzione `fopen` per aprire il file, controllare che questo non sia `NULL` ed in questo caso, usare la modalità
+`a` per indicare che vogliamo scrivere in modalità append. Successivamente, usiamo la funzione `putc` per scrivere un
+carattere sul file corrente.
+
+Tuttavia, manca una prima e fondamentale parte, ossia: il processo di chiusura del file. Nei sistemi UNIX è permesso
+solamente ad un processo alla volta di accedere al contenuto di un file. Fortunatamente, qualora il processo che sta
+eseguendo qualche operazione su un file, venisse terminato, automaticamente viene indicato al sistema operativo che il
+file può essere letto o scritto da un altro processo. Per garantire che non ci siano situazioni di stallo, dovute a
+processi ancora attivi, che non hanno rilasciato le risorse usate per il file, o che non hanno segnalato al sistema
+operativo che il file è disponibile per altre operazioni, è necessario invocare la funzione `fclose`. 
+
+Sulla base dell'intestazione della funzione `fclose`:
+
+```c
+int fclose(FILE* fp);
+```
+
+Questa funzione richiede il puntatore alla struttura `FILE`, e restituisce il valore `0` qualora l'operazione di
+chiusura è andata a buon file, altrimenti, un valore diverso da `0` indica che si è verificato qualche problema nella
+chiusura del file.
+
+Possiamo, quindi, correggere l'esempio precedente inserendo l'operazione di chiusura e di verifica:
+
+```
+uint8_t safe_write_file (const char* path, const char* string)
+{
+    FILE* file_pointer = fopen(path, "a");
+    uint8_t written_chars = 0;
+
+    if (file_pointer == NULL)
+    {
+        fprintf(stderr, "Cannot open file %s\n", path);
+        return 0;
+    }
+
+    for (uint8_t index = 0; string[index] != '\0'; index++) 
+    {
+        int current_written_chars = putc(string[index], file_pointer);
+
+        if (current_written_chars > 0) 
+        {
+            written_chars = written_chars + 1;
+        }
+    }
+
+    int close_flag = fclose(file_pointer);
+
+    if (close_flag != 0) 
+    {
+        fprintf(stderr, "Cannot close file %s\n", path);
+        return 0;
+    }
+
+    return written_chars;
+}
+```
+
 ## Gestione delle Eccezioni <a id="exceptions"></a>
