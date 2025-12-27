@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 
@@ -116,10 +117,93 @@ char* get_tax_code (const client_t* client)
         return NULL;
     }
 
-    size_t tax_code_length = string_length(client->tax_code);
+    const size_t tax_code_length = string_length(client->tax_code);
     char* tax_code_copy = string_copy(client->tax_code, tax_code_length);
 
     return tax_code_copy;
+}
+
+char* get_first_name(const client_t* client)
+{
+    if (client == NULL || client->is_valid == 0)
+    {
+        return NULL;
+    }
+
+    const size_t first_name_length = string_length(client->first_name);
+    char* first_name_copy = string_copy(client->first_name, first_name_length);
+
+    return first_name_copy;
+}
+
+char* get_last_name(const client_t* client)
+{
+    if (client == NULL || client->is_valid == 0)
+    {
+        return NULL;
+    }
+
+    const size_t last_name_length = string_length(client->last_name);
+    char* last_name_copy = string_copy(client->last_name, last_name_length);
+
+    return last_name_copy;
+}
+
+void set_tax_code(client_t* client, const char* tax_code)
+{
+    if (client == NULL || client->is_valid == 0)
+    {
+        return;
+    }
+    
+    const size_t tax_code_length = string_length(tax_code);
+    char* tax_code_copy = string_copy(tax_code, tax_code_length);
+
+    client->tax_code = tax_code_copy;
+}
+
+void set_first_name(client_t* client, const char* first_name)
+{
+    if (client == NULL || client->is_valid == 0)
+    {
+        return;
+    }
+    
+    const size_t first_name_length = string_length(first_name);
+    char* first_name_copy = string_copy(first_name, first_name_length);
+
+    client->first_name= first_name_copy;
+}
+
+void set_last_name(client_t* client, const char* last_name)
+{
+    if (client == NULL || client->is_valid == 0)
+    {
+        return;
+    }
+    
+    const size_t last_name_length = string_length(last_name);
+    char* last_name_copy = string_copy(last_name, last_name_length);
+
+    client->last_name = last_name_copy;
+}
+
+char* serialize_client (const client_t* client)
+{
+    if (client == NULL || client->is_valid == 0)
+    {
+        return NULL;
+    }
+
+    const size_t tax_code_length = string_length(client->tax_code);
+    const size_t first_name_length = string_length(client->first_name);
+    const size_t last_name_length = string_length(client->last_name);
+    
+    char* serialization_string = (char*)calloc(tax_code_length + first_name_length + last_name_length + 3, sizeof(char));
+
+    sprintf(serialization_string, "%s$%s$%s", client->tax_code, client->first_name, client->last_name);
+
+    return serialization_string;
 }
 
 client_t* destroy_client (client_t* client)

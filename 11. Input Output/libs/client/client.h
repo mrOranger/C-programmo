@@ -13,6 +13,8 @@ void set_tax_code(client_t* client, const char* tax_code);
 void set_first_name(client_t* client, const char* first_name);
 void set_last_name(client_t* client, const char* last_name);
 
+char* serialize_client (const client_t* client);
+
 client_t* destroy_client(client_t* client);
 
 #endif
