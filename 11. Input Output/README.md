@@ -5,6 +5,7 @@
 - [Input Output Generalizzato](#generic-io)
 - [Lettura e Scrittura da File](#file-io)
 - [Gestione degli Errori](#exceptions)
+- [CRM Clienti](#example)
 
 # Input Output <a id="io"></a>
 
@@ -351,3 +352,76 @@ uint8_t safe_write_file (const char* path, const char* string)
 ```
 
 # Gestione delle Eccezioni <a id="exceptions"></a>
+
+Nell'esempio precedente, abbiamo gestito le eccezioni in cui non è possibile aprire e chiudere il file, mostrando un
+messaggio di errore nel canale standard error. La funzione, inoltre, restituisce `0`, qualora si verifichi un errore
+durante l'esecuzione, dunque, il numero complessivo di caratteri letti è pari a zero.
+
+Per il momento, il flusso `stderr` reindirizza il messaggio direttamente a video. In altri casi, tuttavia, sarebbe
+opportuno che questo messaggio di errore venga reindirizzato ad un canale più specifico, e meno accessibile all'utente.
+Spesso, si utilizza un file di log, oppure un'invocazione di una procedura remota.
+
+Il problema della funzione `safe_write_file` non è tanto la gestione delle eccezioni, quando la mancanza di terminazione
+del processo, qualora si verifica un'eccezione. Sarebbe auspicabile che, il programma termini, se si verifica un errore
+di questo tipo. Si pensi ad esempio al caso in cui il disco sia saturo, e non è possibile evadere più qualsiasi
+richiesta di input/output su file.
+
+A tal proposito, la funzione `exit` permette di terminare immediatamente l'esecuzione del programma, qualora si
+verifichi un errore:
+
+```c
+void exit(int code)
+```
+
+La funzione richiede solamente il codice di chiusura del programma, il quale, tipicamente dovrebbe essere `0` nel caso
+di una chiusura regolare; un valore diverso da `0` qualora si verifichi una chiusura anomala. Procediamo, allora,
+nell'eseguire un refactoring del codice precedente, implementando la corretta chiusura del programma in caso di presenza
+o mancanza di errori.
+
+```c
+uint8_t safe_write_file (const char* path, const char* string)
+{
+    FILE* file_pointer = fopen(path, "a");
+    uint8_t written_chars = 0;
+
+    if (file_pointer == NULL)
+    {
+        fprintf(stderr, "Cannot open file %s\n", path);
+        exit(-1);
+
+        return 0;
+    }
+
+    for (uint8_t index = 0; string[index] != '\0'; index++) 
+    {
+        int current_written_chars = putc(string[index], file_pointer);
+
+        if (current_written_chars > 0) 
+        {
+            written_chars = written_chars + 1;
+        }
+    }
+
+    int close_flag = fclose(file_pointer);
+
+    if (close_flag != 0) 
+    {
+        fprintf(stderr, "Cannot close file %s\n", path);
+        exit(-1);
+        return 0;
+    }
+
+    return written_chars;
+}
+```
+
+# CRM Clienti <a id="example"></a>
+
+Per concludere questo capitolo, e fare un riassunto finale delle funzionalità che abbiamo visto, implementeremo un
+semplice CRM che permette di gestire i clienti di un negozio. Consideriamo il seguente scenario, molto semplificato:
+
+> Un negozio vuole gestire la propria lista dei clienti. Ciascun cliente possiede un nome, cognome, ed un codice
+> fiscale. In qualsiasi momento, è possibile registrare un nuovo cliente, modificarne uno già precedentemente
+> registrato, oppure rimuoverlo dalla lista, basandosi sul codice fiscale che deve essere un attributo univoco per
+> ciascun cliente e costituito esattamente da 16 caratteri alfanumerici. I clienti vengono memorizzati in un file
+> specifico, sul quale possono essere serializzati o de-serializzati.

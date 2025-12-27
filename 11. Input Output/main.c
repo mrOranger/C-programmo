@@ -64,13 +64,16 @@ int min (const int args_number, ...)
 
 uint8_t write_file (const char* path, const char* string)
 {
+
     FILE* file_pointer = fopen(path, "a");
     uint8_t written_chars = 0;
 
     if (file_pointer == NULL)
     {
         fprintf(stderr, "Cannot open file %s\n", path);
-        return written_chars;
+        exit(-1);
+
+        return 0;
     }
 
     for (uint8_t index = 0; string[index] != '\0'; index++) 
@@ -81,6 +84,16 @@ uint8_t write_file (const char* path, const char* string)
         {
             written_chars = written_chars + 1;
         }
+    }
+
+    int close_flag = fclose(file_pointer);
+
+    if (close_flag != 0) 
+    {
+        fprintf(stderr, "Cannot close file %s\n", path);
+        exit(-1);
+
+        return 0;
     }
 
     return written_chars;
