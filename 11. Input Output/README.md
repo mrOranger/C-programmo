@@ -316,7 +316,7 @@ chiusura del file.
 
 Possiamo, quindi, correggere l'esempio precedente inserendo l'operazione di chiusura e di verifica:
 
-```
+```c
 uint8_t safe_write_file (const char* path, const char* string)
 {
     FILE* file_pointer = fopen(path, "a");
