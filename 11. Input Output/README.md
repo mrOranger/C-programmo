@@ -1,10 +1,10 @@
 - [Input Output](#io)
-    - [Formattazione dei Dati in Uscita con `printf`](#printf)
-        - [Funzioni con un Numero Variabile di Argomenti](#varargs)
-    - [Formattazione dei Dati in Entrata con `scanf`](#scanf)
-    - [Input Output Generalizzato](#generic-io)
-    - [Lettura e Scrittura da File](#file-io)
-    - [Gestione degli Errori](#exceptions)
+- [Formattazione dei Dati in Uscita con `printf`](#printf)
+    - [Funzioni con un Numero Variabile di Argomenti](#varargs)
+- [Formattazione dei Dati in Entrata con `scanf`](#scanf)
+- [Input Output Generalizzato](#generic-io)
+- [Lettura e Scrittura da File](#file-io)
+- [Gestione degli Errori](#exceptions)
 
 # Input Output <a id="io"></a>
 
@@ -19,7 +19,7 @@ potrebbe essere un file, oppure una porta di rete del nostro dispositivo.
 In questo capitolo, quindi, vedremo come manipolare generalmente un flusso di input output, e vedremo l'alternativa al
 flusso standard, ossia: il flusso di dati su file.
 
-## Formattazione dei Dati in Uscita con `printf` <a id="printf"></a>
+# Formattazione dei Dati in Uscita con `printf` <a id="printf"></a>
 
 La funzione `printf` permette di visualizzare i dati ricevuti in input direttamente sul flusso standard. Il primo
 parametro della funzione `printf` è una stringa, contenente i dati che verranno reindirizzati sul flusso standard.
@@ -118,7 +118,7 @@ Le macro in questione, vengono usate al seguente scopo:
   determinare quale sia il tipo corrente di parametro.
 * Infine, `va_end` rilascia le risorse precedentemente allocate.
 
-## Formattazione dei Dati in Entrata con `scanf` <a id="scanf"></a>
+# Formattazione dei Dati in Entrata con `scanf` <a id="scanf"></a>
 
 Se la funzione `printf` visualizza una stringa, formattata seguendo delle precise istruzioni di composizione, sullo
 standard output. La funzione `scanf` legge delle informazioni direttamente dallo standard input, basandosi sul formato
@@ -176,7 +176,7 @@ int main (const int argc, const char** argv)
 }
 ```
 
-## Input Output Generalizzato <a id="generic-io"></a>
+# Input Output Generalizzato <a id="generic-io"></a>
 
 Siamo adesso giunti alla trattazione dell'argomento file. Fino a questo punto, infatti, le operazioni di lettura e
 scrittura hanno coinvolto solamente lo standard input e lo standard output. Non deve stupirci, quindi, che le medesime
@@ -218,7 +218,7 @@ La differenza tra le funzioni `fprintf` - `printf` e `fscanf` - `scanf`, consist
 di reindirizzare le operazioni di input-output verso uno specifico flusso di dati. Vedremo come per scrivere e/o leggere
 su un file, sarà sufficiente usare le medesime funzioni ma specificando un puntatore diverso da `stdin` e `stdout`.
 
-## Lettura e Scrittura da File <a id="file-io"></a>
+# Lettura e Scrittura da File <a id="file-io"></a>
 
 Adesso che abbiamo capito che un flusso di I/O è trattabile esattamente come se fosse un flusso verso un file. Possiamo
 procedere alla descrizione della procedura con la quale viene aperto un canale di comunicazione verso il file, e come è
@@ -350,4 +350,4 @@ uint8_t safe_write_file (const char* path, const char* string)
 }
 ```
 
-## Gestione delle Eccezioni <a id="exceptions"></a>
+# Gestione delle Eccezioni <a id="exceptions"></a>
