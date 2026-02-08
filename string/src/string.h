@@ -21,25 +21,28 @@ string_t *create_empty();
 string_t *create_from(uint8_t *input_string);
 
 /**
- * Concat a sequence of chars to the input string, returning a pointer to the new string. If initialization of the new 
- * string fails, NULL is returned. If the input sequence to concat, or the input string to concat the sequence are NULL
- * then NULL is returned. 
- * 
- * @param input_string pointer to the string to concat.
- * @param sequence_to_concat sequence of char to concat to the input string.
- * @return pointer to the new string, resulting from the concatenation operation.
+ * Returns a copy of the internal char sequence of the string.
+ *
+ * @param pointer to string to extract the internal char sequence.
+ * @return pointer to copy of internal character sequence of string.
  */
-string_t *concat_char(string_t *input_string, char *sequence_to_concat);
+char *get_character_sequence (string_t *string);
 
 /**
- * Concat a string to the input string, returning a pointer to the new string. If initialization of the new 
- * string fails, NULL is returned. If one of the input string is NULL or no more valid, then NULL will be returned.
- * 
- * @param input_string pointer to the string to concat.
- * @param string_to_concat string to concat to the input string.
- * @return pointer to the new string, resulting from the concatenation operation.
+ * Returns a copy of the length of a string.
+ *
+ * @param pointer to string to get the length.
+ * @return copy of length of the string.
  */
-string_t *concat_string(string_t *input_string, string_t *string_to_concat);
+uint8_t get_length (string_t *string);
+
+/**
+ * Checks if the string is valid or not.
+ *
+ * @param pointer to string to check the validity.
+ * @return copy of the validity field of the string.
+ */
+uint8_t is_valid (string_t *string);
 
 /**
  * Release the memory assigned to input_string, returning the pointer to the released string.
