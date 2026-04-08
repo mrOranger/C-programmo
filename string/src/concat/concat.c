@@ -1,5 +1,6 @@
-#include "string.h"
-#include "string.c"
+#include <stdio.h>
+
+#include "../string.h"
 
 string_t *concat_char(string_t *input_string, char *sequence_to_concat)
 {

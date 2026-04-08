@@ -1,8 +1,13 @@
+#include <stdlib.h>
+#include <stdint.h>
+
+#include <stdio.h>
+
 char *clone(char *source, size_t n_bytes)
 {
-    if (source == NULL)
+    if (source == NULL || n_bytes == 0 || n_bytes > 255)
     {
-        return source;
+        return NULL;
     }
 
     char* cloned_source = (char*)calloc(n_bytes, sizeof(char));
@@ -17,12 +22,12 @@ char *clone(char *source, size_t n_bytes)
 
 char *copy(char *source, char *destination, size_t n_bytes)
 {
-    if (source == NULL || destination == NULL)
+    if (source == NULL || destination == NULL || n_bytes > 255 || n_bytes == 0)
     {
         return NULL;
     }
 
-    for (size_t index = 0; index < n_bytes || destination[index] != '\0'; index++)
+    for (size_t index = 0; index < n_bytes || source[index] != '\0'; index++)
     {
         destination[index] = source[index];
     }

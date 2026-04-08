@@ -2,7 +2,7 @@
 #define UTILS_H
 
 /**
- * Creates a new array cloning n_bytes from the source.
+ * Creates a new array cloning n_bytes from the source. At most 255 characters can be copied.
  *
  * @param source pointer to the source data to copy.
  * @param n_bytes number of bytes to copy.
@@ -12,6 +12,7 @@ char *clone(char *source, size_t n_bytes);
 
 /**
  * Copy n_bytes from the source into the destination, returning the pointer to destination.
+ * At most 255 characters can be copied.
  *
  * @param source pointer to the source data to copy.
  * @param destination pointer to the destination data.
